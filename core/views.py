@@ -21,22 +21,13 @@ class Contato(FormView):
     model = Contato
     template_name = 'contato.html'
     form_class = ContatoForm
-    success_url = '/'
+    success_url = '/contato'
 
     def post(self, request, *args, **kwargs):
 
         form = self.get_form()
         if form.is_valid():
-
-            nome = form.cleaned_data['nome']
-            email = form.cleaned_data['email']
-            assunto = form.cleaned_data['assunto']
-            mensagem = form.cleaned_data['mensagem']
-
-            print(nome)
-            print(email)
-            print(assunto)
-            print(mensagem)
+            form.send_mail()
             messages.success(request, 'email enviado com sucesso!')
             form = ContatoForm()
 
