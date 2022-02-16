@@ -3,8 +3,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import FormView
 from core.models import Produto, Contato
-from core.forms import ContatoForm
-
+from core.forms import ContatoForm, ProdutoModelForm
 
 class Index(TemplateView):
     template_name = 'index.html'
@@ -37,8 +36,22 @@ class Contato(FormView):
             return self.form_invalid(form)
 
 
-class Produto(ListView):
+class Produto(FormView):
     model = Produto
     template_name = 'produto.html'
-    context_object_name = 'produto'
+    form_class = ProdutoModelForm
+    success_url = '/produto'
+
+    def post(self, request, *args, **kwargs):
+
+        form = self.get_form()
+        if form.is_valid():
+            produto = form.save(commit=False)
+            messages.success(request, 'produto salvado com sucesso!')
+            # form = ProdutoModelForm()
+
+            return self.form_valid(form)
+        else:
+            messages.error(request, 'erro no envio!')
+            return self.form_invalid(form)
 

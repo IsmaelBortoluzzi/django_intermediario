@@ -1,10 +1,28 @@
+{% load bootstrap4 %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Produto</title>
+    {% bootstrap_css %}
 </head>
-<body>
+<body class="bg-dark text-white">
 
+    <div class="container mt-5">
+        <h1>Produto</h1>
+
+        <form action="{% url 'produto' %}" method="post" class="form" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+
+        <div class="text-right">
+            {% buttons %}
+                <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
+            {% endbuttons %}
+        </div>
+        </form>
+    </div>
+
+    {% bootstrap_javascript jquery='full' %}
 </body>
 </html>

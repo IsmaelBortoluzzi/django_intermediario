@@ -1,5 +1,6 @@
 from django import forms
 from django.core.mail.message import EmailMessage
+from core.models import Produto
 
 
 class ContatoForm(forms.Form):
@@ -24,3 +25,16 @@ class ContatoForm(forms.Form):
             headers={'Replay-To': email}
         )
         mail.send()
+
+
+class ProdutoModelForm(forms.ModelForm):
+    class Meta:
+        model = Produto
+
+        fields = [
+            'nome',
+            'preco',
+            'estoque',
+            'imagem',
+        ]
+
